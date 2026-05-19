@@ -13,13 +13,16 @@ form.addEventListener('submit', (e) => {
     input.value = '';
 });
 
-// සර්වර් එකෙන් මැසේජ් එකක් ආපු ගමන් screen එකේ පෙන්වීම
 socket.on('chat message', (data) => {
     const msgElement = document.createElement('div');
     msgElement.classList.add('message');
-    msgElement.innerHTML = `<strong>You:</strong> ${data.text}`;
-    messagesDiv.appendChild(msgElement);
     
-    // Auto scroll down
+    // මුල් පණිවිඩය සහ පරිවර්තනය ලස්සනට පෙන්වීම
+    msgElement.innerHTML = `
+        <div style="font-size: 0.9em; color: #555;">Original: ${data.original}</div>
+        <div style="font-weight: bold; color: #0084ff;">Translated: ${data.translated}</div>
+    `;
+    
+    messagesDiv.appendChild(msgElement);
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
 });
