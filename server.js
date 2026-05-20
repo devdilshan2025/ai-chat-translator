@@ -19,68 +19,50 @@ io.on('connection', (socket) => {
     socket.on('chat message', async (data) => {
         try {
             if (!data.text || data.text.trim() === "") return;
-            console.log("Input received:", data.text);
+            console.log(`Input: ${data.text} | Target Language: ${data.targetLang}`);
 
-            // 💡 දැනට තියෙන අලුත්ම සහ ස්ථාවරම URL එක (v1 + gemini-2.5-flash)
+            // 💡 Dynamic Dynamic Prompt: Frontend එකෙන් එන භාෂාවට අනුව AI එක පරිවර්තනය කරයි
+            const prompt = `
+            You are an advanced multilingual chat translator.
+            Detect the source language of the input text automatically.
+            Input text: "${data.text}"
+            
+            Translate this input text completely into natural, clear, and contextually accurate "${data.targetLang}".
+            - If the target is Sinhala, output it in proper Sinhala script (not Singlish).
+            - Provide ONLY the translated output text, absolutely nothing else. No commentary, no explanations, no wrapping quotes.
+            `;
+
             const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 
             const response = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    contents: [{
-                        parts: [{
-                            text: `Translate this text to English. Give ONLY the English translation, no extra notes: ${data.text}`
-                        }]
-                    }]
+                    contents: [{ parts: [{ text: prompt }] }]
                 })
             });
 
             const result = await response.json();
 
-            // පළමු එක (gemini-2.5-flash) Fail වුණොත් අපි gemini-2.0-flash බලමු
             if (result.error) {
-                console.log(`🔄 gemini-2.5-flash failed (${result.error.message}), trying gemini-2.0-flash...`);
-                
-                const backupUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
-                const backupResponse = await fetch(backupUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Translate this text to English. Give ONLY the translation: ${data.text}` }] }]
-                    })
-                });
-                
-                const backupResult = await backupResponse.json();
-                
-                if (backupResult.error) {
-                    throw new Error(backupResult.error.message);
-                }
-                
-                const translatedText = backupResult.candidates[0].content.parts[0].text.trim();
-                console.log("✅ Success with Backup Model:", translatedText);
-                io.emit('chat message', { original: data.text, translated: translatedText });
-                return;
+                throw new Error(result.error.message);
             }
 
             if (result.candidates && result.candidates[0].content) {
                 const translatedText = result.candidates[0].content.parts[0].text.trim();
-                console.log("✅ Success with Main Model:", translatedText);
+                console.log("✅ Dynamic Translation Success:", translatedText);
 
+                // දත්ත නැවත Frontend එකට emit කිරීම
                 io.emit('chat message', {
                     original: data.text,
-                    translated: translatedText
+                    translated: translatedText,
+                    targetLang: data.targetLang,
+                    senderId: socket.id 
                 });
-            } else {
-                throw new Error("Unexpected API response format");
             }
 
         } catch (error) {
-            console.error("❌ Error during translation:", error.message);
-            socket.emit('chat message', { 
-                original: data.text, 
-                translated: `⚠️ (AI Error: ${error.message.substring(0, 40)})` 
-            });
+            console.error("❌ Error:", error.message);
         }
     });
 
