@@ -1,25 +1,225 @@
+/* Linguistics AI - Dark Modern Theme */
+:root {
+    --bg-color: #0d1117; /* Darkest Background */
+    --chat-bg: #161b22; /* Chat Container Background */
+    --primary-color: #5a52ff; /* New Electric Blue */
+    --primary-hover: #4f46e5;
+    
+    --user-bubble: #232a35; /* User Bubble (Darker Blue/Grey) */
+    --ai-bubble: #21262d; /* AI Bubble (Slightly lighter dark) */
+    
+    --text-main: #e6edf3; /* Brightest white/grey text */
+    --text-muted: #8b949e; /* Muted grey text */
+    
+    --border-color: #30363d; /* Dark borders */
+    --dropdown-bg: #1f242b;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    
+    /* 💡 බැක්ග්‍රවුන්ඩ් එක (geometric pattern) */
+    background-color: var(--bg-color);
+    background-image: 
+        linear-gradient(45deg, #10141b 25%, transparent 25%), 
+        linear-gradient(-45deg, #10141b 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #10141b 75%),
+        linear-gradient(-45deg, transparent 75%, #10141b 75%);
+    background-size: 40px 40px;
+    background-position: 0 0, 0 20px, 20px 20px, 20px 0;
+    
+    /* 💡 ඔයාට image එකක් දාන්න ඕනේ නම්, උඩ gradient ටික comment කරලා මේක පාවිච්චි කරන්න: */
+    /* background-image: url('background.jpg'); 
+       background-size: cover; 
+       background-position: center; */
+}
+
+#chat-container {
+    width: 480px;
+    height: 650px;
+    background: var(--chat-bg);
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+h2 {
+    background: var(--chat-bg); /* Header matches background */
+    color: var(--text-main);
+    margin: 0;
+    padding: 22px;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+
+/* Header එකේ පොඩි glow එකක් */
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 20%;
+    width: 60%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+}
+
+#messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) var(--chat-bg);
+}
+
+/* Custom Scrollbar */
+#messages::-webkit-scrollbar { width: 6px; }
+#messages::-webkit-scrollbar-track { background: var(--chat-bg); }
+#messages::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+
+/* Message Bubbles */
+.message-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 85%;
+}
+
+.message-wrapper.user { align-self: flex-end; }
+.message-wrapper.ai { align-self: flex-start; }
+
+.bubble {
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    position: relative;
+    word-wrap: break-word;
+}
+
+.user .bubble {
+    background: var(--primary-color); /* User bubble uses primary blue */
+    color: white;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 3px 10px rgba(90, 82, 255, 0.2);
+}
+
+.ai .bubble {
+    background: var(--ai-bubble);
+    color: var(--text-main);
+    border-top-left-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.meta-info {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+    padding: 0 6px;
+}
+
+.user .meta-info { text-align: right; }
+
+.copy-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 0.78rem;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.copy-btn:hover { text-decoration: underline; }
+
+/* Typing Indicator */
+#typing-indicator {
+    padding: 10px 18px;
+    background: var(--ai-bubble);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    border-radius: 16px;
+    align-self: flex-start;
+    display: none;
+    font-style: italic;
+    border: 1px solid var(--border-color);
+}
+
+/* Language Selector */
 #language-selector-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
-    background: #f9fafb;
-    border-top: 1px solid #f3f4f6;
-    font-size: 0.85rem;
+    padding: 12px 25px;
+    background: #191f28;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.88rem;
     color: var(--text-muted);
 }
 
 #target-lang {
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: 1px solid #e5e7eb;
-    background: white;
-    font-size: 0.85rem;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--dropdown-bg);
     color: var(--text-main);
+    font-size: 0.88rem;
     outline: none;
     cursor: pointer;
+    transition: border-color 0.2s;
 }
 
-#target-lang:focus {
-    border-color: var(--primary-color);
+#target-lang:focus { border-color: var(--primary-color); }
+
+/* Form Section */
+#chat-form {
+    display: flex;
+    padding: 18px 25px;
+    background: var(--chat-bg);
+    border-top: 1px solid var(--border-color);
+    gap: 12px;
 }
+
+#msg-input {
+    flex: 1;
+    padding: 14px 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--bg-color); /* Input matches darkest background */
+    color: var(--text-main);
+    outline: none;
+    font-size: 1rem;
+    transition: border 0.2s;
+}
+
+#msg-input::placeholder { color: var(--text-muted); }
+#msg-input:focus { border-color: var(--primary-color); }
+
+button[type="submit"] {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0 25px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button[type="submit"]:hover { background: var(--primary-hover); }
