@@ -1,70 +1,73 @@
-/* Linguistics AI - Dark Modern Theme */
+/* Linguistics AI - Dark Neon Teal Theme with Glassmorphism */
 :root {
-    --bg-color: #0d1117; /* Darkest Background */
-    --chat-bg: #161b22; /* Chat Container Background */
-    --primary-color: #5a52ff; /* New Electric Blue */
-    --primary-hover: #4f46e5;
+    --bg-color: #060b13; /* තද කළු/නිල් පසුබිම */
+    --chat-bg: rgba(10, 25, 30, 0.7); /* 💡 Wallpaper එකට ගැලපෙන Teal Glass Effect එකක් */
     
-    --user-bubble: #232a35; /* User Bubble (Darker Blue/Grey) */
-    --ai-bubble: #21262d; /* AI Bubble (Slightly lighter dark) */
+    --primary-color: #00f2fe; /* 💡 අලුත් Neon Cyan කලර් එක (User Bubble වලට) */
+    --primary-hover: #00c6ff;
     
-    --text-main: #e6edf3; /* Brightest white/grey text */
-    --text-muted: #8b949e; /* Muted grey text */
+    --user-bubble: #00f2fe; 
+    --ai-bubble: rgba(16, 37, 44, 0.6); /* 💡 AI Bubble එකත් තේමාවට මැච් කළා */
     
-    --border-color: #30363d; /* Dark borders */
-    --dropdown-bg: #1f242b;
+    --text-main: #e6edf3; 
+    --text-muted: #78909c; 
+    
+    --border-color: rgba(0, 242, 254, 0.15); /* 💡 ලාවට දිලිසෙන Cyan බෝඩර්ස් */
+    --dropdown-bg: #0f232a;
 }
 
 body {
     font-family: 'Segoe UI', Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end; /* චැට් බොක්ස් එක දකුණටම තබාගන්නවා */
     align-items: center;
     height: 100vh;
     margin: 0;
+    padding-right: 6vw; /* දකුණු පසින් ඉඩ තියනවා */
     
-    /* 💡 බැක්ග්‍රවුන්ඩ් එක (geometric pattern) */
+    background-image: linear-gradient(rgba(6, 11, 19, 0.1), rgba(6, 11, 19, 0.4)), url('./bg.jpg');
+    background-size: cover; 
+    background-position: center center; 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-color: var(--bg-color);
-    background-image: 
-        linear-gradient(45deg, #10141b 25%, transparent 25%), 
-        linear-gradient(-45deg, #10141b 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, #10141b 75%),
-        linear-gradient(-45deg, transparent 75%, #10141b 75%);
-    background-size: 40px 40px;
-    background-position: 0 0, 0 20px, 20px 20px, 20px 0;
     
-    /* 💡 ඔයාට image එකක් දාන්න ඕනේ නම්, උඩ gradient ටික comment කරලා මේක පාවිච්චි කරන්න: */
-    /* background-image: url('background.jpg'); 
-       background-size: cover; 
-       background-position: center; */
+    overflow: hidden;
 }
 
 #chat-container {
-    width: 480px;
-    height: 650px;
+    width: 440px;
+    height: 580px; /* 💡 උස 630 සිට 580 දක්වා අඩු කළා නම ලස්සනට පේන්න */
     background: var(--chat-bg);
-    border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 242, 254, 0.1); /* 💡 චැට් බොක්ස් එක වටේට ලස්සන Neon Glow එකක් දුන්නා */
     display: flex;
     flex-direction: column;
     overflow: hidden;
     border: 1px solid var(--border-color);
+    
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    
+    position: relative;
+    z-index: 10;
+    margin-top: 20px; /* 💡 උඩින් ඉඩ තැබුවා */
 }
 
 h2 {
-    background: var(--chat-bg); /* Header matches background */
-    color: var(--text-main);
+    background: rgba(10, 25, 30, 0.4); 
+    color: #00f2fe; /* 💡 නම ලස්සනට Neon Cyan වලින් පෙනෙන්න හැදුවා */
     margin: 0;
-    padding: 22px;
+    padding: 20px;
     text-align: center;
     font-size: 1.4rem;
     font-weight: 700;
-    letter-spacing: 0.8px;
+    letter-spacing: 1px;
     border-bottom: 1px solid var(--border-color);
     position: relative;
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.5); /* 💡 නම Glow වෙනවා */
 }
 
-/* Header එකේ පොඩි glow එකක් */
 h2::after {
     content: '';
     position: absolute;
@@ -83,13 +86,13 @@ h2::after {
     flex-direction: column;
     gap: 18px;
     scrollbar-width: thin;
-    scrollbar-color: var(--border-color) var(--chat-bg);
+    scrollbar-color: rgba(0, 242, 254, 0.2) transparent;
 }
 
 /* Custom Scrollbar */
-#messages::-webkit-scrollbar { width: 6px; }
-#messages::-webkit-scrollbar-track { background: var(--chat-bg); }
-#messages::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+#messages::-webkit-scrollbar { width: 5px; }
+#messages::-webkit-scrollbar-track { background: transparent; }
+#messages::-webkit-scrollbar-thumb { background: rgba(0, 242, 254, 0.2); border-radius: 10px; }
 
 /* Message Bubbles */
 .message-wrapper {
@@ -103,7 +106,7 @@ h2::after {
 
 .bubble {
     padding: 14px 18px;
-    border-radius: 16px;
+    border-radius: 18px;
     font-size: 0.98rem;
     line-height: 1.5;
     position: relative;
@@ -111,10 +114,11 @@ h2::after {
 }
 
 .user .bubble {
-    background: var(--primary-color); /* User bubble uses primary blue */
-    color: white;
+    background: linear-gradient(135deg, #00c6ff, #00f2fe); /* 💡 User bubble එක පට්ට Neon Gradient එකක් කළා */
+    color: #060b13; /* කියවන්න ලේසි වෙන්න අකුරු තද පාට කළා */
+    font-weight: 600;
     border-bottom-right-radius: 4px;
-    box-shadow: 0 3px 10px rgba(90, 82, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
 }
 
 .ai .bubble {
@@ -131,17 +135,16 @@ h2::after {
     padding: 0 6px;
 }
 
-.user .meta-info { text-align: right; }
+.user .meta-info { text-align: right; color: #00f2fe; opacity: 0.8; }
 
 .copy-btn {
     background: none;
     border: none;
-    color: var(--primary-color);
+    color: #00f2fe; /* 💡 කොපි බටන් එකත් තේමාවට මැච් කළා */
     font-size: 0.78rem;
     cursor: pointer;
     padding: 0;
     margin-left: 10px;
-    text-decoration: none;
     font-weight: 600;
 }
 
@@ -151,9 +154,9 @@ h2::after {
 #typing-indicator {
     padding: 10px 18px;
     background: var(--ai-bubble);
-    color: var(--text-muted);
+    color: #00f2fe;
     font-size: 0.9rem;
-    border-radius: 16px;
+    border-radius: 18px;
     align-self: flex-start;
     display: none;
     font-style: italic;
@@ -166,7 +169,7 @@ h2::after {
     align-items: center;
     justify-content: space-between;
     padding: 12px 25px;
-    background: #191f28;
+    background: rgba(10, 25, 30, 0.6);
     border-top: 1px solid var(--border-color);
     font-size: 0.88rem;
     color: var(--text-muted);
@@ -181,7 +184,6 @@ h2::after {
     font-size: 0.88rem;
     outline: none;
     cursor: pointer;
-    transition: border-color 0.2s;
 }
 
 #target-lang:focus { border-color: var(--primary-color); }
@@ -190,7 +192,7 @@ h2::after {
 #chat-form {
     display: flex;
     padding: 18px 25px;
-    background: var(--chat-bg);
+    background: rgba(10, 25, 30, 0.7);
     border-top: 1px solid var(--border-color);
     gap: 12px;
 }
@@ -199,27 +201,26 @@ h2::after {
     flex: 1;
     padding: 14px 18px;
     border: 1px solid var(--border-color);
-    border-radius: 10px;
-    background: var(--bg-color); /* Input matches darkest background */
+    border-radius: 12px;
+    background: rgba(6, 11, 19, 0.7);
     color: var(--text-main);
     outline: none;
     font-size: 1rem;
-    transition: border 0.2s;
 }
 
 #msg-input::placeholder { color: var(--text-muted); }
-#msg-input:focus { border-color: var(--primary-color); }
+#msg-input:focus { border-color: var(--primary-color); box-shadow: 0 0 10px rgba(0, 242, 254, 0.3); }
 
 button[type="submit"] {
-    background: var(--primary-color);
-    color: white;
+    background: linear-gradient(135deg, #00c6ff, #00f2fe);
+    color: #060b13;
     border: none;
     padding: 0 25px;
-    border-radius: 10px;
+    border-radius: 12px;
     font-weight: 700;
     font-size: 1rem;
     cursor: pointer;
-    transition: background 0.2s;
+    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
 }
 
-button[type="submit"]:hover { background: var(--primary-hover); }
+button[type="submit"]:hover { opacity: 0.9; }
