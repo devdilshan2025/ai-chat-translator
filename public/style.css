@@ -1,21 +1,20 @@
 /* Linguistics AI - Dark Neon Teal Theme with Glassmorphism */
 :root {
-    --bg-color: #060b13; /* තද කළු/නිල් පසුබිම */
-    --chat-bg: rgba(10, 25, 30, 0.7); /* 💡 Wallpaper එකට ගැලපෙන Teal Glass Effect එකක් */
+    --bg-color: #020b18; /* තද කළු/නිල් පසුබිම */
+    --chat-bg: rgba(202, 222, 229, 0.7); /* 💡 Wallpaper එකට ගැලපෙන Teal Glass Effect එකක් */
     
-    --primary-color: #00f2fe; /* 💡 අලුත් Neon Cyan කලර් එක (User Bubble වලට) */
+    --primary-color: #021314; /* 💡 අලුත් Neon Cyan කලර් එක (User Bubble වලට) */
     --primary-hover: #00c6ff;
     
     --user-bubble: #00f2fe; 
-    --ai-bubble: rgba(16, 37, 44, 0.6); /* 💡 AI Bubble එකත් තේමාවට මැච් කළා */
+    --ai-bubble: rgba(156, 176, 183, 0.6); /* 💡 AI Bubble එකත් තේමාවට මැච් කළා */
     
-    --text-main: #e6edf3; 
-    --text-muted: #78909c; 
+    --text-main: #081018; 
+    --text-muted: #d4dce0; 
     
-    --border-color: rgba(0, 242, 254, 0.15); /* 💡 ලාවට දිලිසෙන Cyan බෝඩර්ස් */
-    --dropdown-bg: #0f232a;
+    --border-color: rgba(156, 219, 223, 0.15); /* 💡 ලාවට දිලිසෙන Cyan බෝඩර්ස් */
+    --dropdown-bg: #c9e1ea;
 }
-
 body {
     font-family: 'Segoe UI', Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     display: flex;
@@ -23,18 +22,24 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    padding-right: 6vw; /* දකුණු පසින් ඉඩ තියනවා */
+    padding-right: 6vw; /* දකුණු පසින් චැට් බොක්ස් එකට ලස්සනට ඉඩ තියනවා */
     
-    background-image: linear-gradient(rgba(6, 11, 19, 0.1), rgba(6, 11, 19, 0.4)), url('./bg.jpg');
-    background-size: cover; 
-    background-position: center center; 
+    /* 💡 මෙන්න නියම ෆික්ස් එක: ඉමේජ් එකේ කෙළවරේ තියෙන නියම Light Cyan/Blue පාටවල් (#4fa8be සහ #2b849a) සෙට් කළා! 
+       දැන් කිසිම ඉරක් පේන්නේ නැතුව දකුණු පැත්තේ කෙළවරටම පට්ටම Smooth විදිහට මැච් වෙනවා */
+    background-image: 
+        linear-gradient(to right, rgba(13, 17, 23, 0.1) 15%, #4fa8be 65%, #2b849a 100%), 
+        url('./bg.jpg');
+    
+    background-size: auto 100%; /* මිනිස්සු දෙන්නා වම් පැත්තේ ලස්සනට තියාගන්නවා */
+    background-position: left bottom; /* වම් කෙළවරට ලොක් කළා */
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-color: var(--bg-color);
+    
+    /* 💡 පසුබිම් පාටත් ඒ නියම අහස් නිල්/සයන් පාටටම ලොක් කළා */
+    background-color: #2b849a; 
     
     overflow: hidden;
 }
-
 #chat-container {
     width: 440px;
     height: 580px; /* 💡 උස 630 සිට 580 දක්වා අඩු කළා නම ලස්සනට පේන්න */
@@ -55,8 +60,8 @@ body {
 }
 
 h2 {
-    background: rgba(10, 25, 30, 0.4); 
-    color: #00f2fe; /* 💡 නම ලස්සනට Neon Cyan වලින් පෙනෙන්න හැදුවා */
+    background: rgba(193, 208, 214, 0.4); 
+    color: #091d1e; /* 💡 නම ලස්සනට Neon Cyan වලින් පෙනෙන්න හැදුවා */
     margin: 0;
     padding: 20px;
     text-align: center;
@@ -86,7 +91,7 @@ h2::after {
     flex-direction: column;
     gap: 18px;
     scrollbar-width: thin;
-    scrollbar-color: rgba(0, 242, 254, 0.2) transparent;
+    scrollbar-color: #e2eadf33 transparent;
 }
 
 /* Custom Scrollbar */
@@ -192,7 +197,7 @@ h2::after {
 #chat-form {
     display: flex;
     padding: 18px 25px;
-    background: rgba(10, 25, 30, 0.7);
+    background: rgba(115, 121, 123, 0.7);
     border-top: 1px solid var(--border-color);
     gap: 12px;
 }
@@ -209,7 +214,7 @@ h2::after {
 }
 
 #msg-input::placeholder { color: var(--text-muted); }
-#msg-input:focus { border-color: var(--primary-color); box-shadow: 0 0 10px rgba(0, 242, 254, 0.3); }
+#msg-input:focus { border-color: var(--primary-color); box-shadow: 0 0 10px rgba(181, 206, 207, 0.3); }
 
 button[type="submit"] {
     background: linear-gradient(135deg, #00c6ff, #00f2fe);
@@ -220,7 +225,7 @@ button[type="submit"] {
     font-weight: 700;
     font-size: 1rem;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+    box-shadow: 0 4px 15px rgba(201, 219, 220, 0.3);
 }
 
 button[type="submit"]:hover { opacity: 0.9; }
