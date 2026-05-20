@@ -12,8 +12,20 @@
         <div id="messages">
             <div id="typing-indicator">LinguoChat is translating...</div>
         </div>
+        
+        <div id="language-selector-container">
+            <label for="target-lang">Translate my messages to: </label>
+            <select id="target-lang">
+                <option value="English" selected>English 🇬🇧</option>
+                <option value="Sinhala">Sinhala (සිංහල) 🇱🇰</option>
+                <option value="Japanese">Japanese (日本語) 🇯🇵</option>
+                <option value="French">French (Français) 🇫🇷</option>
+                <option value="Spanish">Spanish (Español) 🇪🇸</option>
+            </select>
+        </div>
+
         <form id="chat-form">
-            <input type="text" id="msg-input" placeholder="සිංහලෙන් හෝ සිංග්ලිෂ්වලින් ලියන්න..." autocomplete="off" required>
+            <input type="text" id="msg-input" placeholder="Type anything here..." autocomplete="off" required>
             <button type="submit">Send</button>
         </form>
     </div>
