@@ -1,17 +1,20 @@
-const socket = io();
+// 💡 මෙන්න මේක වැදගත්ම දේ: 
+// දැනට local රන් කරනවා නම් 'http://localhost:3000' දාන්න. 
+// Backend එක live හොස්ට් කරපු දවසට ඔයාගේ Live Backend URL එක මෙතනට දාන්න (උදා: 'https://my-backend.render.com')
+const socket = io('http://localhost:3001'); 
 
 const form = document.getElementById('chat-form');
 const input = document.getElementById('msg-input');
 const messagesDiv = document.getElementById('messages');
 const typingIndicator = document.getElementById('typing-indicator');
-const langSelect = document.getElementById('target-lang'); // 💡 Dropdown එක ගන්නවා
+const langSelect = document.getElementById('target-lang'); 
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     const message = input.value.trim();
     if (!message) return;
 
-    const selectedLanguage = langSelect.value; // 💡 තෝරපු භාෂාව
+    const selectedLanguage = langSelect.value; 
 
     // සර්වර් එකට මැසේජ් එක සහ Target භාෂාව යවනවා
     socket.emit('chat message', { 
@@ -27,6 +30,10 @@ form.addEventListener('submit', (e) => {
 });
 
 socket.on('chat message', (data) => {
+    // මැසේජ් එකක් ආපු ගමන් ටයිපින් ඉන්ඩිකේටර් එක අයින් කරනවා
+    if (typingIndicator.parentNode === messagesDiv) {
+        messagesDiv.removeChild(typingIndicator);
+    }
     typingIndicator.style.display = 'none';
 
     const wrapper = document.createElement('div');
@@ -40,7 +47,7 @@ socket.on('chat message', (data) => {
             <div class="meta-info">You (Sent)</div>
         `;
     } else {
-        // අනෙක් කෙනාට පෙනෙන පරිවර්තනය (වමට)
+        
         wrapper.classList.add('ai');
         wrapper.innerHTML = `
             <div class="bubble">${data.translated}</div>

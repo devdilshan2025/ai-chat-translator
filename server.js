@@ -7,11 +7,25 @@ require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+
+// 💡 CORS Error එන එක වළක්වන්න GitHub Pages ලින්ක් එකට මෙතනින් අවසර දුන්නා
+const io = new Server(server, {
+    cors: {
+        origin: "*", // ඕනෑම තැනක සිට Connect වීමට ඉඩ දෙයි
+        methods: ["GET", "POST"]
+    }
+});
 
 const API_KEY = process.env.GEMINI_API_KEY;
 
-app.use(express.static(path.join(__dirname, 'public')));
+// 💡 මෙන්න වෙනස: දැන් මුළු ප්‍රොජෙක්ට් එකේම තියෙන ෆයිල් Static විදිහට සර්ව් කරනවා
+app.use(express.static(path.join(__dirname)));
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
+// 💡 යූසර් සර්වර් එකට ආපු ගමන් එළියේ තියෙන index.html එක ඕපන් කරනවා
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 io.on('connection', (socket) => {
     console.log('User connected! ✅');
@@ -21,7 +35,6 @@ io.on('connection', (socket) => {
             if (!data.text || data.text.trim() === "") return;
             console.log(`Input: ${data.text} | Target Language: ${data.targetLang}`);
 
-            // 💡 Dynamic Dynamic Prompt: Frontend එකෙන් එන භාෂාවට අනුව AI එක පරිවර්තනය කරයි
             const prompt = `
             You are an advanced multilingual chat translator.
             Detect the source language of the input text automatically.
@@ -71,6 +84,7 @@ io.on('connection', (socket) => {
     });
 });
 
+// 💡 පොට් එක 3001 තියාගත්තා, ඔයා main.js එකට දීපු පොට් එකමයි
 const PORT = 3001;
 server.listen(PORT, () => {
     console.log(`🚀 Server is running on: http://localhost:${PORT}`);
